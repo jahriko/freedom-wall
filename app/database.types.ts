@@ -36,6 +36,32 @@ export interface Database {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          full_name: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+        }
+        Update: {
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       teacher: {
         Row: {
           created_at: string

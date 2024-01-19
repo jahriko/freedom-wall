@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Heart from "react-heart"
 import {
 	Drawer,
 	DrawerClose,
@@ -34,70 +35,71 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog"
+import { Database } from "@/app/database.types"
+import { ScrollArea } from "./ui/scroll-area"
 
-export function PostCard() {
+export function PostCard({
+	post,
+}: {
+	post: Database["public"]["Tables"]["post"]["Row"]
+}) {
 	const [open, setOpen] = React.useState(false)
 	const isDesktop = useMediaQuery("(min-width: 768px)")
+	const [isClick, setClick] = React.useState(false)
 
 	if (isDesktop) {
-
 		return (
-			<Dialog>
-				<DialogTrigger asChild>
-					<Card className="hover:bg-slate-50 hover:shadow-sm hover:cursor-pointer">
-						<CardHeader>
-							<div className="space-x-2">
-								<span className="text-xs text-gray-950">to</span>
-								<a
-									className="text-gray-900  text-sm font-medium"
-								>
-									Sir John Smith
-								</a>
-							</div>
-						</CardHeader>
-						<CardContent>
-							<p className="text-gray-800 prose-sm line-clamp-3">Usdfkj lkjsdlf jsdl jldsjf lsjdlfkj sdjfl kjt enim ad minim veniam Sign in with your UIC 🥲🙌😍😭🎉👏😇😭🎉🎉🎉🎉email to share your love to your teacher! Sign in with your UIC email to share your love to your teacher!</p>
-						</CardContent>
-						<CardFooter className="justify-end">
-							<div className="text-right space-x-2">
-								<span className="text-xs text-indigo-600">from</span>
-								<a
-									className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
-								>
-									Jericho Opsima
-								</a>
-							</div>
-						</CardFooter>
-					</Card>
-				</DialogTrigger>
-				<DialogContent className="p-4">
-					<Card className="border-none shadow-none">
-						<CardHeader>
-							<div className="space-x-2">
-								<span className="text-xs text-gray-950">to</span>
-								<a
-									className="text-gray-900  text-sm font-medium"
-								>
-									Sir John Smith
-								</a>
-							</div>
-						</CardHeader>
-						<CardContent>
-							<p className="text-gray-800 prose-sm">dfkj lkjsdlf jsdl jldsjf lsjdlfkj sdjfl kjt enim ad minim veniam Sign in with your UIC 🥲🙌😍😭🎉👏😇😭🎉🎉🎉🎉email to share your love to your teacher! Sign in with your UIC email to share your love to your teacher!</p>
-						</CardContent>
-						<CardFooter className="justify-end">
-							<div className="text-right space-x-2">
-								<span className="text-xs text-indigo-600">from</span>
-								<a
-									className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
-								>
-									Jericho Opsima
-								</a>
-							</div>
-						</CardFooter>
-					</Card>
-				</DialogContent>
-			</Dialog>
+			<Card className="hover:bg-slate-50 hover:shadow-sm hover:cursor-pointer">
+				<CardHeader>
+					<div className="space-x-2">
+						<span className="text-xs text-indigo-600">to</span>
+						<a className=" text-sm font-medium text-indigo-600 hover:text-indigo-500 capitalize">
+							{post.teacher_name}
+						</a>
+					</div>
+				</CardHeader>
+				<CardContent className=" h-28">
+					<p className="text-gray-800 prose-sm line-clamp-3">{post.text}</p>
+					<Dialog>
+						<DialogTrigger asChild>
+							<span className="text-blue-600 hover:text-blue-400 font-medium text-xs">
+								Read more
+							</span>
+						</DialogTrigger>
+						<DialogContent className="p-4 max-w-2xl">
+							<ScrollArea className="max-h-[80vh]">
+								<Card className="border-none shadow-none">
+									<CardHeader>
+										<div className="space-x-2">
+											<span className="text-xs text-indigo-600">to</span>
+											<a className="text-sm font-medium text-indigo-600 hover:text-indigo-500 capitalize">
+												{post.teacher_name}
+											</a>
+										</div>
+									</CardHeader>
+									<CardContent>
+										<p className="text-gray-800 prose-sm">{post.text}</p>
+									</CardContent>
+									<CardFooter className="justify-end">
+										<div className="text-right space-x-2">
+											<span className="text-xs text-gray-950">—</span>
+											<a className="text-gray-900  text-sm font-medium">
+												{post.student_name}
+											</a>
+										</div>
+									</CardFooter>
+								</Card>
+							</ScrollArea>
+						</DialogContent>
+					</Dialog>
+				</CardContent>
+				<CardFooter className="flex justify-end relative">
+					<div className="text-right space-x-2">
+						<span className="text-xs text-gray-950">—</span>
+						<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>
+					</div>
+				</CardFooter>
+			</Card>
 		)
 	}
 
@@ -107,43 +109,46 @@ export function PostCard() {
 				<Card className="hover:bg-slate-50 hover:shadow-sm hover:cursor-pointer">
 					<CardHeader>
 						<div className="space-x-2">
-							<span className="text-xs text-gray-950">to</span>
-							<a
-								className="text-gray-900  text-sm font-medium"
-							>
-								Sir John Smith
-							</a>
+							<span className="text-xs text-gray-950 capitalize">to</span>
+							<a className="text-gray-900  text-sm font-medium capitalize">{post.teacher_name}</a>
 						</div>
 					</CardHeader>
 					<CardContent>
-						<p className="text-gray-800 prose-sm ">Ufkj lkjsdlf jsdl jldsjf lsjdlfkj sdjfl kjt enim ad minim veniam Sign in with your UIC 🥲🙌😍😭🎉👏😇😭🎉🎉🎉🎉email to share your love to your teacher! Sign in with your UIC email to share your love to your teacher!</p>
+						<p className="text-gray-800 prose-sm ">{post.text}</p>
 					</CardContent>
-					<CardFooter className="justify-end">
+					<CardFooter className="justify-between">
 						<div className="text-right space-x-2">
-							<span className="text-xs text-indigo-600">from</span>
-							<a
-								className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
-							>
-								Jericho Opsima
+							<span className="text-xs text-indigo-600">—</span>
+							<a className="text-indigo-600 hover:text-indigo-500 text-sm font-medium">
+								{post.student_name}
 							</a>
 						</div>
 					</CardFooter>
 				</Card>
 			</DrawerTrigger>
 			<DrawerContent>
-				<DrawerHeader className="text-left">
-					<DrawerTitle>Edit profile</DrawerTitle>
-					<DrawerDescription>
-						Make changes to your profile here. Click save when you're done.
-					</DrawerDescription>
-				</DrawerHeader>
-				<DrawerFooter className="pt-2">
-					<DrawerClose asChild>
-						<Button variant="outline">Cancel</Button>
-					</DrawerClose>
-				</DrawerFooter>
+				<Card className="border-none shadow-none">
+					<CardHeader>
+						<div className="space-x-2">
+							<span className="text-xs text-indigo-600">to</span>
+							<a className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+								{post.teacher_name}
+							</a>
+						</div>
+					</CardHeader>
+					<CardContent>
+						<p className="text-gray-800 prose-sm">{post.text}</p>
+					</CardContent>
+					<CardFooter className="justify-end">
+						{/* <Heart isClick={isClick} onClick={() => setClick(!isClick)} /> */}
+
+						<div className="text-right space-x-2">
+							<span className="text-xs text-gray-950">—</span>
+							<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>
+						</div>
+					</CardFooter>
+				</Card>
 			</DrawerContent>
 		</Drawer>
 	)
-
 }

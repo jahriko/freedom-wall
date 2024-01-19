@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import * as React from "react"
 import {
 	Dialog,
 	DialogContent,
@@ -26,6 +27,7 @@ import { Form, FormControl, FormField, FormItem } from "./ui/form"
 import { createBrowserClient } from "@supabase/ssr"
 import { toast } from "sonner"
 import { Database } from "@/app/database.types"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
 	teacher_title: z.string().min(1),
@@ -34,6 +36,8 @@ const formSchema = z.object({
 })
 
 export default function CreatePost({ user }: { user: string }) {
+	const [open, setOpen] = React.useState(false)
+	const router = useRouter()
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -86,9 +90,13 @@ export default function CreatePost({ user }: { user: string }) {
 				onClick: () => console.log("View"),
 			},
 		})
+		
+		setOpen(false)
+		router.refresh()
+		form.reset()
 	}
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button variant="outline">Edit Profile</Button>
 			</DialogTrigger>

@@ -133,7 +133,7 @@ let integrations = [
 export default async function Home() {
 	const cookieStore = cookies()
 
-	const supabase = createServerClient(
+	const supabase = createServerClient<Database>(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
 		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 		{
@@ -148,6 +148,10 @@ export default async function Home() {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
+
+	let { data: posts, error } = await supabase.from("post").select("*")
+
+	if (error) throw error
 
 	const getuser = user?.user_metadata
 
@@ -290,53 +294,11 @@ export default async function Home() {
 					<section className="py-16">
 						<div className="max-w-screen-xl mx-auto px-4 md:px-8">
 							<ul className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-								{integrations.map((item) => (
-									// <li className="border rounded-lg" key={item.title}>
-									//   <div className="flex items-start justify-between p-4">
-									//     <div className="space-y-2">
-									//       {item.icon()}
-									//       <h4 className="text-gray-800 font-semibold">{item.title}</h4>
-									//       <p className="text-gray-600 text-sm">{item.desc}</p>
-									//     </div>
-									//     <button
-									//       className="text-gray-700 text-sm border rounded-lg px-3 py-2 duration-150 hover:bg-gray-100"
-									//     >Connect</button>
-									//   </div>
-									//   <div className="py-5 px-4 border-t text-right">
-									//     <a
-									//       className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
-									//     >
-									//       View integration
-									//     </a>
-									//   </div>
-									// </li>
+								{posts?.map((post) => (
 									<li
-										// className="border rounded-lg"
-										key={item.title}
+										key={post.id}
 									>
-										{/* <div className="flex items-start justify-between p-4">
-                      <div className="space-y-2">
-                        <div className="py-2 space-x-2">
-                          <span className="text-xs text-gray-950">to</span>
-                          <a
-                            className="text-gray-900  text-sm font-medium"
-                          >
-                            Sir John Smith
-                          </a>
-                        </div>
-                       <img src="screenshot.png" alt="" className="rounded-lg aspect-[3/2] object-cover" /> 
-                        <p className="text-gray-800 prose-sm line-clamp-4">{item.desc}</p>
-                      </div>
-                      <div className="pt-2 pb-5 px-4  text-right space-x-2">
-                        <span className="text-xs text-indigo-600">from</span>
-                        <a
-                          className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
-                        >
-                          Jericho Opsima
-                        </a>
-                      </div>
-                    </div> */}
-										<PostCard />
+										<PostCard post={post} />
 									</li>
 								))}
 							</ul>
