@@ -49,7 +49,7 @@ export function PostCard({
 
 	if (isDesktop) {
 		return (
-			<Card className="hover:bg-slate-50 hover:shadow-sm hover:cursor-pointer">
+			<Card>
 				<CardHeader>
 					<div className="space-x-2">
 						<span className="text-xs text-indigo-600">to</span>
@@ -62,12 +62,12 @@ export function PostCard({
 					<p className="text-gray-800 prose-sm line-clamp-3">{post.text}</p>
 					<Dialog>
 						<DialogTrigger asChild>
-							<span className="text-blue-600 hover:text-blue-400 font-medium text-xs">
+							<span className="text-blue-600 hover:text-blue-400 font-medium text-xs cursor-pointer">
 								Read more
 							</span>
 						</DialogTrigger>
 						<DialogContent className="p-4 max-w-2xl">
-							<ScrollArea className="max-h-[80vh]">
+							<ScrollArea className="max-h-[70vh]">
 								<Card className="border-none shadow-none">
 									<CardHeader>
 										<div className="space-x-2">
@@ -110,11 +110,13 @@ export function PostCard({
 					<CardHeader>
 						<div className="space-x-2">
 							<span className="text-xs text-gray-950 capitalize">to</span>
-							<a className="text-gray-900  text-sm font-medium capitalize">{post.teacher_name}</a>
+							<a className="text-gray-900  text-sm font-medium capitalize">
+								{post.teacher_name}
+							</a>
 						</div>
 					</CardHeader>
 					<CardContent>
-						<p className="text-gray-800 prose-sm ">{post.text}</p>
+						<p className="text-gray-800 prose-sm line-clamp-3">{post.text}</p>
 					</CardContent>
 					<CardFooter className="justify-between">
 						<div className="text-right space-x-2">
@@ -127,7 +129,7 @@ export function PostCard({
 				</Card>
 			</DrawerTrigger>
 			<DrawerContent>
-				<Card className="border-none shadow-none">
+				<Card className="border-none shadow-none p-2">
 					<CardHeader>
 						<div className="space-x-2">
 							<span className="text-xs text-indigo-600">to</span>
@@ -137,7 +139,9 @@ export function PostCard({
 						</div>
 					</CardHeader>
 					<CardContent>
-						<p className="text-gray-800 prose-sm">{post.text}</p>
+						<ScrollArea className="h-96">
+							<p className="text-gray-800 prose-sm ">{post.text}</p>
+						</ScrollArea>
 					</CardContent>
 					<CardFooter className="justify-end">
 						{/* <Heart isClick={isClick} onClick={() => setClick(!isClick)} /> */}

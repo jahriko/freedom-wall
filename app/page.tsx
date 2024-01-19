@@ -8,6 +8,7 @@ import { redirect } from "next/navigation"
 import { PostCard } from "@/components/PostCard"
 import CreatePost from "@/components/CreatePost"
 import { createServerClient } from "@supabase/ssr"
+import { Button } from "@/components/ui/button"
 
 let integrations = [
 	{
@@ -187,23 +188,16 @@ export default async function Home() {
 						fill="url(#55d3d46d-692e-45f2-becd-d8bdc9344f45)"
 					/>
 				</svg>
-				<p>user metadata</p>
-				{getuser?.name}
 
-				{user && (
-					<div>
-						<form action="/auth/signout" method="post">
-							<button className="button block" type="submit">
-								Sign out
-							</button>
-						</form>
-					</div>
-				)}
+				<div className="flex justify-center">
+
 
 				<img
 					src="./celebrate.png"
-					className="absolute  -z-10 hidden sm:block right-12 size-[55rem]"
+					className="sm:absolute -z-10 sm:right-12 sm:size-[55rem] size-72"
 				></img>
+
+				</div>
 				<div className="relative">
 					<div
 						className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 transform-gpu overflow-hidden opacity-30 blur-3xl"
@@ -230,47 +224,10 @@ export default async function Home() {
 						></div>
 					</div>
 				</div>
-				<div className="px-6 pt-6 lg:px-32">
-					<nav className="flex items-center justify-between" aria-label="Global">
-						{/* <div className="flex lg:flex-1">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
-              </a>
-            </div> */}
-						<div className="flex lg:hidden">
-							<button
-								type="button"
-								className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-							>
-								<span className="sr-only">Open main menu</span>
-								<svg
-									className="h-6 w-6"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									aria-hidden="true"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-									/>
-								</svg>
-							</button>
-						</div>
-					</nav>
-				</div>
 				<main>
 					<div className="relative px-6 lg:px-32">
-						<div className="max-w-4xl py-32 sm:py-48 lg:py-56">
-							<div className="text-left">
+						<div className="max-w-4xl py-4 sm:py-48 lg:py-56">
+							<div className="text-center sm:text-left">
 								{/* <h1 className="text-4xl font-sans tracking-tight sm:leading-tight text-gray-900 sm:text-8xl">
                   Happy Catholic Educator's Day! 🎉
                 </h1> */}
@@ -280,13 +237,18 @@ export default async function Home() {
 								<p className="mt-6 text-lg leading-8 text-gray-600">
 									Sign in with your UIC email to share your love to your teacher!
 								</p>
-								<div className="mt-10 flex items-center justify-start gap-x-6">
-									{/* <a
-                    href="#"
-                    className="rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >Share your love to your teacher</a
-                  > */}
+								<div className="mt-10 flex items-center justify-center sm:justify-start gap-x-6">
 									{user ? <CreatePost user={getuser?.name} /> : <AuthForm />}
+
+									{user && (
+										<div>
+											<form action="/auth/signout" method="post">
+												<Button variant="ghost" size="lg" type="submit">
+													Sign out
+												</Button>
+											</form>
+										</div>
+									)}
 								</div>
 							</div>
 						</div>
@@ -295,9 +257,7 @@ export default async function Home() {
 						<div className="max-w-screen-xl mx-auto px-4 md:px-8">
 							<ul className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 								{posts?.map((post) => (
-									<li
-										key={post.id}
-									>
+									<li key={post.id}>
 										<PostCard post={post} />
 									</li>
 								))}

@@ -98,7 +98,7 @@ export default function CreatePost({ user }: { user: string }) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline">Edit Profile</Button>
+				<Button variant="default">Send a message</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-lg">
 				<DialogHeader>
