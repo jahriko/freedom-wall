@@ -94,8 +94,16 @@ export function PostCard({
 				</CardContent>
 				<CardFooter className="flex justify-end relative">
 					<div className="text-right space-x-2">
-						<span className="text-xs text-gray-950">—</span>
-						<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>
+						{ post.student_name === "" ? (
+							<>
+								<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>
+							</>
+						) : (
+							<>
+								<span className="text-xs text-gray-950">—</span>
+								<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>
+							</>
+						)}
 					</div>
 				</CardFooter>
 			</Card>

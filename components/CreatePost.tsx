@@ -10,6 +10,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 import {
 	Select,
 	SelectContent,
@@ -33,6 +35,7 @@ const formSchema = z.object({
 	teacher_title: z.string().min(1),
 	teacher_name: z.string().min(1),
 	message: z.string().min(1),
+	send_anonymously: z.boolean(),
 })
 
 export default function CreatePost({ user }: { user: string }) {
@@ -44,6 +47,7 @@ export default function CreatePost({ user }: { user: string }) {
 			teacher_title: "",
 			teacher_name: "",
 			message: "",
+			send_anonymously: false,
 		},
 	})
 
@@ -54,16 +58,15 @@ export default function CreatePost({ user }: { user: string }) {
 			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 		)
 
+		let student_name = user
+
+		if (values.send_anonymously) {
+			student_name = ""
+		}
+
 		const { message, teacher_name, teacher_title } = values
 
 		const teacher_name_with_title = `${teacher_title} ${teacher_name}`
-
-		console.log("hi lol", {
-			message,
-			teacher_name,
-			teacher_name_with_title,
-			user,
-		})
 
 		const { data, error } = await supabase
 			.from("post")
@@ -71,7 +74,7 @@ export default function CreatePost({ user }: { user: string }) {
 				{
 					text: message,
 					teacher_name: teacher_name_with_title,
-					student_name: user,
+					student_name,
 					// text: message as string,
 					// student_name: user,
 					// teacher_name: teacher_name_with_title as string,
@@ -114,12 +117,12 @@ export default function CreatePost({ user }: { user: string }) {
 							<FormField
 								control={form.control}
 								name="teacher_title"
-								render={({ field }) => (
+								render={({field}) => (
 									<FormItem>
 										<Select onValueChange={field.onChange} defaultValue={field.value}>
 											<FormControl>
 												<SelectTrigger>
-													<SelectValue placeholder="Select title" />
+													<SelectValue placeholder="Select title"/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
@@ -137,7 +140,7 @@ export default function CreatePost({ user }: { user: string }) {
 							<FormField
 								control={form.control}
 								name="teacher_name"
-								render={({ field }) => (
+								render={({field}) => (
 									<FormItem>
 										<FormControl>
 											<Input
@@ -155,7 +158,7 @@ export default function CreatePost({ user }: { user: string }) {
 							<FormField
 								control={form.control}
 								name="message"
-								render={({ field }) => (
+								render={({field}) => (
 									<FormItem>
 										<FormControl>
 											<Textarea
@@ -169,11 +172,25 @@ export default function CreatePost({ user }: { user: string }) {
 								)}
 							/>
 						</div>
+						<FormField
+							control={form.control}
+							name="send_anonymously"
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<div className="flex space-x-2">
+											<Switch id="send-anonymously" checked={field.value} onCheckedChange={field.onChange}/>
+											<Label htmlFor="send-anonymously">Send Anonymously</Label>
+										</div>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
 					</form>
 				</Form>
 				<DialogFooter>
 					<Button type="submit" form="create-post">
-						Post it!
+						Post it
 					</Button>
 				</DialogFooter>
 			</DialogContent>

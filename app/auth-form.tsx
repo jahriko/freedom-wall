@@ -26,7 +26,7 @@ export default function AuthForm() {
 			supabaseClient={supabase}
 			appearance={{ theme: ThemeSupa }}
 			providers={['google']}
-			redirectTo='/'
+			redirectTo={window.location.origin}
 			queryParams={
 				{
 					access_type: 'offline',
