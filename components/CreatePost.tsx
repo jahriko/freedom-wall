@@ -172,20 +172,22 @@ export default function CreatePost({ user }: { user: string }) {
 								)}
 							/>
 						</div>
-						<FormField
-							control={form.control}
-							name="send_anonymously"
-							render={({ field }) => (
-								<FormItem>
-									<FormControl>
-										<div className="flex space-x-2">
-											<Switch id="send-anonymously" checked={field.value} onCheckedChange={field.onChange}/>
-											<Label htmlFor="send-anonymously">Send Anonymously</Label>
-										</div>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
+						<div className="col-span-4">
+							<FormField
+								control={form.control}
+								name="send_anonymously"
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<div className="flex items-center space-x-2">
+												<Switch id="send-anonymously" checked={field.value} onCheckedChange={field.onChange}/>
+												<Label htmlFor="send-anonymously">Send Anonymously</Label>
+											</div>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						</div>
 					</form>
 				</Form>
 				<DialogFooter>
