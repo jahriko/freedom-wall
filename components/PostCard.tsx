@@ -96,6 +96,7 @@ export function PostCard({
 					<div className="text-right space-x-2">
 						{ post.student_name === "" ? (
 							<>
+								<span> </span>
 								<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>
 							</>
 						) : (
