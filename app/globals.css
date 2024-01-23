@@ -1,6 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'geist';
+  src: url('/public/fonts/Geist-Light.woff2') format('woff2');
+}
+
+/*@font-face {*/
+/*  font-family: 'geist-medium';*/
+/*  src: url('/public/fonts/Geist-Medium.woff2') format('woff2');*/
+/*}*/
  
 @layer base {
   :root {

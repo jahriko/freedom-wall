@@ -87,12 +87,7 @@ export default function CreatePost({ user }: { user: string }) {
 			throw error
 		}
 
-		toast("Post created successfully", {
-			action: {
-				label: "View",
-				onClick: () => console.log("View"),
-			},
-		})
+		toast("Post created successfully")
 		
 		setOpen(false)
 		router.refresh()
@@ -101,7 +96,13 @@ export default function CreatePost({ user }: { user: string }) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="default">Send a message</Button>
+				<Button
+					variant="default"
+					className="bg-pink-900/60 hover:bg-pink-900/70"
+					size="lg"
+				>
+					Send a message
+				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-lg">
 				<DialogHeader>
@@ -117,12 +118,12 @@ export default function CreatePost({ user }: { user: string }) {
 							<FormField
 								control={form.control}
 								name="teacher_title"
-								render={({field}) => (
+								render={({ field }) => (
 									<FormItem>
 										<Select onValueChange={field.onChange} defaultValue={field.value}>
 											<FormControl>
 												<SelectTrigger>
-													<SelectValue placeholder="Select title"/>
+													<SelectValue placeholder="Select title" />
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
@@ -140,7 +141,7 @@ export default function CreatePost({ user }: { user: string }) {
 							<FormField
 								control={form.control}
 								name="teacher_name"
-								render={({field}) => (
+								render={({ field }) => (
 									<FormItem>
 										<FormControl>
 											<Input
@@ -158,7 +159,7 @@ export default function CreatePost({ user }: { user: string }) {
 							<FormField
 								control={form.control}
 								name="message"
-								render={({field}) => (
+								render={({ field }) => (
 									<FormItem>
 										<FormControl>
 											<Textarea
@@ -180,7 +181,11 @@ export default function CreatePost({ user }: { user: string }) {
 									<FormItem>
 										<FormControl>
 											<div className="flex items-center space-x-2">
-												<Switch id="send-anonymously" checked={field.value} onCheckedChange={field.onChange}/>
+												<Switch
+													id="send-anonymously"
+													checked={field.value}
+													onCheckedChange={field.onChange}
+												/>
 												<Label htmlFor="send-anonymously">Send Anonymously</Label>
 											</div>
 										</FormControl>
@@ -191,7 +196,10 @@ export default function CreatePost({ user }: { user: string }) {
 					</form>
 				</Form>
 				<DialogFooter>
-					<Button type="submit" form="create-post">
+					<Button
+						type="submit"
+						form="create-post"
+					>
 						Post it
 					</Button>
 				</DialogFooter>

@@ -170,14 +170,13 @@ export default async function Home() {
 		"kintong_210000001981@uic.edu.ph",
 	]
 
-	const allowDelete =
-		getUserEmail === "" ? false : emails.includes(getUserEmail) ? true : false
+	const allowDelete = getUserEmail === "" ? false : emails.includes(getUserEmail)
 
 	return (
 		<>
 			<div className="isolate bg-white">
 				<svg
-					className="absolute inset-0 -z-10 hidden h-full w-full stroke-gray-300 [mask-image:radial-gradient(90rem_90rem_at_top,white,transparent)] sm:block"
+					className="absolute inset-0 -z-10  h-full w-full stroke-gray-200 [mask-image:radial-gradient(90rem_90rem_at_top,white,transparent)] sm:block"
 					aria-hidden="true"
 				>
 					<defs>
@@ -209,7 +208,7 @@ export default async function Home() {
 				<div className="flex justify-center">
 					<img
 						src="./celebrate.png"
-						className="sm:absolute -z-10 sm:right-12 sm:size-[55rem] size-72"
+						className="sm:absolute -z-10 lg:right-8 sm:size-[55rem] size-72"
 					></img>
 				</div>
 				<div className="relative">
@@ -241,23 +240,28 @@ export default async function Home() {
 				<main>
 					<div className="relative px-6 lg:px-32">
 						<div className="max-w-4xl py-4 sm:py-48 lg:py-56">
-							<div className="text-center sm:text-left">
-								{/* <h1 className="text-4xl font-sans tracking-tight sm:leading-tight text-gray-900 sm:text-8xl">
-                  Happy Catholic Educator's Day! 🎉
-                </h1> */}
-								<p className="text-4xl md:text-8xl font-sans sm:leading-snug bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.slate.800),theme(colors.gray.500),theme(colors.stone.800),theme(colors.gray.800),theme(colors.stone.800),theme(colors.gray.500),theme(colors.slate.800))] bg-[length:200%_auto] animate-gradient">
-									Happy Catholic Educator's Day!
-								</p>
-								<p className="mt-6 text-lg leading-8 text-gray-600">
-									Sign in with your UIC email to share your love to your teacher!
-								</p>
-								<div className="mt-10 flex items-center justify-center sm:justify-start gap-x-6">
+							<div className="text-center lg:text-left space-y-20">
+								<div>
+									<p className="py-2 text-5xl leading-snug md:text-6xl text-balance lg:text-8xl font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.pink.500),theme(colors.red.400),theme(colors.pink.500),theme(colors.pink.500),theme(colors.pink.500),theme(colors.red.400),theme(colors.pink.500))] bg-[length:200%_auto] animate-gradient">
+										Happy Catholic Educator's Day!
+									</p>
+									<p className="sm:mt-2 text-sm sm:text-lg leading-8 text-gray-600">
+										Sign in with your UIC email to share your love to your teacher!
+									</p>
+								</div>
+
+								<div className="flex items-center justify-center lg:justify-start gap-x-6">
 									{user ? <CreatePost user={getuser?.name} /> : <AuthForm />}
 
 									{user && (
 										<div>
 											<form action="/auth/signout" method="post">
-												<Button variant="ghost" size="lg" type="submit">
+												<Button
+													variant="ghost"
+													size="lg"
+													type="submit"
+													className="text-pink-900/70"
+												>
 													Sign out
 												</Button>
 											</form>
@@ -269,10 +273,10 @@ export default async function Home() {
 					</div>
 					<section className="py-16">
 						<div className="max-w-screen-xl mx-auto px-4 md:px-8">
-							<ul className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+							<ul className="mt-16 grid gap-8 grid-cols-2 lg:grid-cols-3">
 								{posts?.map((post) => (
 									<li key={post.id}>
-										<PostCard post={post} allowDelete={allowDelete}/>
+										<PostCard post={post} allowDelete={allowDelete} />
 									</li>
 								))}
 							</ul>

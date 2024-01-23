@@ -38,6 +38,9 @@ import { Database } from "@/app/database.types"
 import { ScrollArea } from "./ui/scroll-area"
 import { DeleteIcon, Trash2Icon } from "lucide-react"
 import { createBrowserClient } from "@supabase/ssr"
+import { toast } from "sonner"
+import { revalidatePath } from "next/cache"
+import { useRouter } from "next/navigation"
 
 export function PostCard({
 	post,
@@ -49,6 +52,23 @@ export function PostCard({
 	const [open, setOpen] = React.useState(false)
 	const isDesktop = useMediaQuery("(min-width: 768px)")
 	const [isClick, setClick] = React.useState(false)
+	  const supabase = createBrowserClient<Database>(
+			process.env.NEXT_PUBLIC_SUPABASE_URL!,
+			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+		)
+		const router = useRouter()
+
+		const deletePost = async () => {
+			const { error } = await supabase.from('post').delete().eq('id', post.id)
+			if (error) {
+				toast(`Error: ${error.message}`)
+			}
+
+			router.refresh()
+
+			return toast(`Post deleted`)
+		}
+
 
 	if (isDesktop) {
 		return (
@@ -56,17 +76,17 @@ export function PostCard({
 				<CardHeader>
 					<div className="flex justify-between">
 						<div className="space-x-2">
-							<span className="text-xs text-indigo-600">to</span>
-							<a className=" text-sm font-medium text-indigo-600 hover:text-indigo-500 capitalize">
+							<span className="text-xs text-pink-900/70">to</span>
+							<a className=" text-sm font-medium text-pink-900/70 hover:text-pink-900/80 capitalize">
 								{post.teacher_name}
 							</a>
 						</div>
 						<div>
-							{
-								allowDelete && (
+							{allowDelete && (
+								<button onClick={deletePost}>
 									<Trash2Icon className="w-4 h-4 text-red-400 hover:text-red-600 cursor-pointer" />
-								)
-							}
+								</button>
+							)}
 						</div>
 					</div>
 				</CardHeader>
@@ -74,7 +94,7 @@ export function PostCard({
 					<p className="text-gray-800 prose-sm line-clamp-3">{post.text}</p>
 					<Dialog>
 						<DialogTrigger asChild>
-							<span className="text-blue-600 hover:text-blue-400 font-medium text-xs cursor-pointer">
+							<span className="text-pink-900/70 hover:text-pink-900/80 font-medium text-xs cursor-pointer">
 								Read more
 							</span>
 						</DialogTrigger>
@@ -83,8 +103,8 @@ export function PostCard({
 								<Card className="border-none shadow-none">
 									<CardHeader>
 										<div className="space-x-2">
-											<span className="text-xs text-indigo-600">to</span>
-											<a className="text-sm font-medium text-indigo-600 hover:text-indigo-500 capitalize">
+											<span className="text-xs text-pink-900/70">to</span>
+											<a className="text-sm font-medium text-pink-900/70 hover:text-pink-900/80 capitalize">
 												{post.teacher_name}
 											</a>
 										</div>
@@ -94,7 +114,7 @@ export function PostCard({
 									</CardContent>
 									<CardFooter className="justify-end">
 										<div className="text-right space-x-2">
-											<span className="text-xs text-gray-950">—</span>
+											<span className="text-xs text-gray-900">—</span>
 											<a className="text-gray-900  text-sm font-medium">
 												{post.student_name}
 											</a>
@@ -129,22 +149,42 @@ export function PostCard({
 			<DrawerTrigger asChild>
 				<Card className="hover:bg-slate-50 hover:shadow-sm hover:cursor-pointer">
 					<CardHeader>
+						<div className="flex justify-between">
 						<div className="space-x-2">
-							<span className="text-xs text-gray-950 capitalize">to</span>
-							<a className="text-gray-900  text-sm font-medium capitalize">
+							<span className="text-xs text-pink-900/70 capitalize">to</span>
+							<a className="text-pink-900/70  text-sm font-medium capitalize">
 								{post.teacher_name}
 							</a>
 						</div>
+						<div>
+							{allowDelete && (
+								<button onClick={deletePost}>
+									<Trash2Icon className="w-4 h-4 text-red-400 hover:text-red-600 cursor-pointer" />
+								</button>
+							)}
+						</div>
+						</div>
 					</CardHeader>
-					<CardContent>
+					<CardContent className="h-24">
 						<p className="text-gray-800 prose-sm line-clamp-3">{post.text}</p>
 					</CardContent>
 					<CardFooter className="justify-between">
 						<div className="text-right space-x-2">
-							<span className="text-xs text-indigo-600">—</span>
-							<a className="text-indigo-600 hover:text-indigo-500 text-sm font-medium">
-								{post.student_name}
-							</a>
+							{post.student_name === "" ? (
+								<>
+									<span> </span>
+									<a className="text-gray-900  text-sm font-medium">
+										{post.student_name}
+									</a>
+								</>
+							) : (
+								<>
+									<span className="text-xs text-gray-950">—</span>
+									<a className="text-gray-900  text-sm font-medium">
+										{post.student_name}
+									</a>
+								</>
+							)}
 						</div>
 					</CardFooter>
 				</Card>
@@ -153,8 +193,8 @@ export function PostCard({
 				<Card className="border-none shadow-none p-2">
 					<CardHeader>
 						<div className="space-x-2">
-							<span className="text-xs text-indigo-600">to</span>
-							<a className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+							<span className="text-xs text-pink-900/70">to</span>
+							<a className="text-sm font-medium text-pink-900/70 hover:text-pink-900/80">
 								{post.teacher_name}
 							</a>
 						</div>
@@ -168,7 +208,7 @@ export function PostCard({
 						{/* <Heart isClick={isClick} onClick={() => setClick(!isClick)} /> */}
 
 						<div className="text-right space-x-2">
-							<span className="text-xs text-gray-950">—</span>
+							<span className="text-xs text-gray-900">—</span>
 							<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>
 						</div>
 					</CardFooter>
