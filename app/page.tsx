@@ -150,7 +150,10 @@ export default async function Home() {
 		data: { user },
 	} = await supabase.auth.getUser()
 
-	let { data: posts, error } = await supabase.from("post").select("*").order('created_at', { ascending: false })
+	let { data: posts, error } = await supabase
+		.from("post")
+		.select("*")
+		.order("created_at", { ascending: false })
 
 	if (error) throw error
 
