@@ -39,8 +39,10 @@ import { ScrollArea } from "./ui/scroll-area"
 
 export function PostCard({
 	post,
+	allowDelete
 }: {
 	post: Database["public"]["Tables"]["post"]["Row"]
+	allowDelete?: boolean
 }) {
 	const [open, setOpen] = React.useState(false)
 	const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -50,11 +52,20 @@ export function PostCard({
 		return (
 			<Card>
 				<CardHeader>
-					<div className="space-x-2">
-						<span className="text-xs text-indigo-600">to</span>
-						<a className=" text-sm font-medium text-indigo-600 hover:text-indigo-500 capitalize">
-							{post.teacher_name}
-						</a>
+					<div className="flex justify-between">
+						<div className="space-x-2">
+							<span className="text-xs text-indigo-600">to</span>
+							<a className=" text-sm font-medium text-indigo-600 hover:text-indigo-500 capitalize">
+								{post.teacher_name}
+							</a>
+						</div>
+						<div>
+							{
+								allowDelete && (
+									<Trash2Icon className="w-4 h-4 text-red-400 hover:text-red-600 cursor-pointer" />
+								)
+							}
+						</div>
 					</div>
 				</CardHeader>
 				<CardContent className=" h-28">
@@ -94,7 +105,7 @@ export function PostCard({
 				</CardContent>
 				<CardFooter className="flex justify-end relative">
 					<div className="text-right space-x-2">
-						{ post.student_name === "" ? (
+						{post.student_name === "" ? (
 							<>
 								<span> </span>
 								<a className="text-gray-900  text-sm font-medium">{post.student_name}</a>

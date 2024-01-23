@@ -155,6 +155,20 @@ export default async function Home() {
 	if (error) throw error
 
 	const getuser = user?.user_metadata
+	const getUserEmail = user?.email ?? ""
+
+	const emails = [
+		"jopsima_210000000652@uic.edu.ph",
+		"jautor_210000001078@uic.edu.ph",
+		"npalacios_200000000446@uic.edu.ph",
+		"kalinea_230000001202@uic.edu.ph",
+		"aorig_200000000296@uic.edu.ph",
+		"emiranda_220000000963@uic.edu.ph",
+		"kintong_210000001981@uic.edu.ph",
+	]
+
+	const allowDelete =
+		getUserEmail === "" ? false : emails.includes(getUserEmail) ? true : false
 
 	return (
 		<>
@@ -258,7 +272,7 @@ export default async function Home() {
 							<ul className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 								{posts?.map((post) => (
 									<li key={post.id}>
-										<PostCard post={post} />
+										<PostCard post={post} allowDelete={allowDelete}/>
 									</li>
 								))}
 							</ul>
