@@ -36,6 +36,8 @@ import {
 } from "@/components/ui/dialog"
 import { Database } from "@/app/database.types"
 import { ScrollArea } from "./ui/scroll-area"
+import { DeleteIcon, Trash2Icon } from "lucide-react"
+import { createBrowserClient } from "@supabase/ssr"
 
 export function PostCard({
 	post,

@@ -207,13 +207,10 @@ export default async function Home() {
 				</svg>
 
 				<div className="flex justify-center">
-
-
-				<img
-					src="./celebrate.png"
-					className="sm:absolute -z-10 sm:right-12 sm:size-[55rem] size-72"
-				></img>
-
+					<img
+						src="./celebrate.png"
+						className="sm:absolute -z-10 sm:right-12 sm:size-[55rem] size-72"
+					></img>
 				</div>
 				<div className="relative">
 					<div
