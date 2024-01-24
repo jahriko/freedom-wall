@@ -42,11 +42,16 @@ import { toast } from "sonner"
 import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 
+type PostSummary = Pick<
+	Database["public"]["Tables"]["post"]["Row"],
+	"id" | "student_name" | "teacher_name" | "text"
+> 
+
 export function PostCard({
 	post,
 	allowDelete
 }: {
-	post: Database["public"]["Tables"]["post"]["Row"]
+	post: PostSummary
 	allowDelete?: boolean
 }) {
 	const [open, setOpen] = React.useState(false)
@@ -63,8 +68,6 @@ export function PostCard({
 			if (error) {
 				toast(`Error: ${error.message}`)
 			}
-
-			router.refresh()
 
 			return toast(`Post deleted`)
 		}

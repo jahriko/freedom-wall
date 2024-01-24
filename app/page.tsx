@@ -9,6 +9,7 @@ import { PostCard } from "@/components/PostCard"
 import CreatePost from "@/components/CreatePost"
 import { createServerClient } from "@supabase/ssr"
 import { Button } from "@/components/ui/button"
+import RealtimePosts from "@/components/RealtimePosts"
 
 let integrations = [
 	{
@@ -152,7 +153,7 @@ export default async function Home() {
 
 	let { data: posts, error } = await supabase
 		.from("post")
-		.select("*")
+		.select("student_name,teacher_name,text,id")
 		.order("created_at", { ascending: false })
 
 	if (error) throw error
@@ -164,10 +165,10 @@ export default async function Home() {
 		"jopsima_210000000652@uic.edu.ph",
 		"jautor_210000001078@uic.edu.ph",
 		"npalacios_200000000446@uic.edu.ph",
-		"kalinea_230000001202@uic.edu.ph",
-		"aorig_200000000296@uic.edu.ph",
-		"emiranda_220000000963@uic.edu.ph",
-		"kintong_210000001981@uic.edu.ph",
+		// "kalinea_230000001202@uic.edu.ph",
+		// "aorig_200000000296@uic.edu.ph",
+		// "emiranda_220000000963@uic.edu.ph",
+		// "kintong_210000001981@uic.edu.ph",
 	]
 
 	const allowDelete = getUserEmail === "" ? false : emails.includes(getUserEmail)
@@ -273,13 +274,14 @@ export default async function Home() {
 					</div>
 					<section className="py-16">
 						<div className="max-w-screen-xl mx-auto px-4 md:px-8">
-							<ul className="mt-16 grid gap-8 grid-cols-2 lg:grid-cols-3">
+							{/* <ul className="mt-16 grid gap-8 grid-cols-2 lg:grid-cols-3">
 								{posts?.map((post) => (
 									<li key={post.id}>
 										<PostCard post={post} allowDelete={allowDelete} />
 									</li>
 								))}
-							</ul>
+							</ul> */}
+							<RealtimePosts allowDelete={allowDelete} posts={posts} />
 						</div>
 					</section>
 				</main>

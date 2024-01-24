@@ -50,6 +50,8 @@ export default function CreatePost({ user }: { user: string }) {
 			send_anonymously: false,
 		},
 	})
+	const watchTitle = form.watch("teacher_title")
+
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 
@@ -86,11 +88,11 @@ export default function CreatePost({ user }: { user: string }) {
 			toast("Error creating post")
 			throw error
 		}
+		setOpen(false)
 
 		toast("Post created successfully")
 		
-		setOpen(false)
-		router.refresh()
+		// router.refresh()
 		form.reset()
 	}
 	return (
@@ -130,6 +132,7 @@ export default function CreatePost({ user }: { user: string }) {
 												<SelectItem value="Sir">Sir</SelectItem>
 												<SelectItem value="Ma'am">Ma'am</SelectItem>
 												<SelectItem value="Miss">Miss</SelectItem>
+												<SelectItem value="All">All Educators</SelectItem>
 											</SelectContent>
 										</Select>
 									</FormItem>
