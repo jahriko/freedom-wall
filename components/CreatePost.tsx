@@ -25,15 +25,15 @@ import { Textarea } from "@/components/ui/textarea"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Form, FormControl, FormField, FormItem } from "./ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form"
 import { createBrowserClient } from "@supabase/ssr"
 import { toast } from "sonner"
 import { Database } from "@/app/database.types"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-	teacher_title: z.string().min(1),
-	teacher_name: z.string().min(1),
+	teacher_title: z.string().min(1, { message: "Select a title" }),
+	teacher_name: z.string(),
 	message: z.string().min(1),
 	send_anonymously: z.boolean(),
 })
@@ -50,11 +50,14 @@ export default function CreatePost({ user }: { user: string }) {
 			send_anonymously: false,
 		},
 	})
-	const watchTitle = form.watch("teacher_title")
+	// console.log(watchTitle)
 
+	const watchTitle = form.watch("teacher_title")
+	// useEffect(() => {
+
+	// })
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
-
 		const supabase = createBrowserClient<Database>(
 			process.env.NEXT_PUBLIC_SUPABASE_URL!,
 			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -68,7 +71,10 @@ export default function CreatePost({ user }: { user: string }) {
 
 		const { message, teacher_name, teacher_title } = values
 
-		const teacher_name_with_title = `${teacher_title} ${teacher_name}`
+		const teacher_name_with_title =
+			teacher_title === "All Educators"
+				? teacher_title
+				: `${teacher_title} ${teacher_name}`
 
 		const { data, error } = await supabase
 			.from("post")
@@ -91,7 +97,7 @@ export default function CreatePost({ user }: { user: string }) {
 		setOpen(false)
 
 		toast("Post created successfully")
-		
+
 		// router.refresh()
 		form.reset()
 	}
@@ -132,9 +138,10 @@ export default function CreatePost({ user }: { user: string }) {
 												<SelectItem value="Sir">Sir</SelectItem>
 												<SelectItem value="Ma'am">Ma'am</SelectItem>
 												<SelectItem value="Miss">Miss</SelectItem>
-												<SelectItem value="All">All Educators</SelectItem>
+												<SelectItem value="All Educators">All Educators</SelectItem>
 											</SelectContent>
 										</Select>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
@@ -152,8 +159,11 @@ export default function CreatePost({ user }: { user: string }) {
 												placeholder="Educator's Full Name"
 												// className="flex-auto"
 												{...field}
+												disabled={watchTitle === "All Educators"}
+												// { watchTitle === "All" ? "disabled" : ""}
 											/>
 										</FormControl>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
@@ -199,10 +209,7 @@ export default function CreatePost({ user }: { user: string }) {
 					</form>
 				</Form>
 				<DialogFooter>
-					<Button
-						type="submit"
-						form="create-post"
-					>
+					<Button type="submit" form="create-post">
 						Post it
 					</Button>
 				</DialogFooter>

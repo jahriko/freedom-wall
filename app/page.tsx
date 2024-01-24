@@ -195,13 +195,13 @@ export default async function Home() {
 					<svg x="50%" y="0" className="overflow-visible fill-gray-50">
 						<path
 							d="M-200.5 0h201v201h-201Z M599.5 0h201v201h-201Z M399.5 400h201v201h-201Z M-400.5 600h201v201h-201Z"
-							stroke-width="0"
+							strokeWidth="0"
 						/>
 					</svg>
 					<rect
 						width="100%"
 						height="100%"
-						stroke-width="0"
+						strokeWidth="0"
 						fill="url(#55d3d46d-692e-45f2-becd-d8bdc9344f45)"
 					/>
 				</svg>
@@ -209,7 +209,7 @@ export default async function Home() {
 				<div className="flex justify-center">
 					<img
 						src="./celebrate.png"
-						className="sm:absolute -z-10 lg:right-8 sm:size-[55rem] size-72"
+						className="sm:absolute -z-10 lg:right-8 sm:size-[55rem] size-96"
 					></img>
 				</div>
 				<div className="relative">
@@ -240,7 +240,7 @@ export default async function Home() {
 				</div>
 				<main>
 					<div className="relative px-6 lg:px-32">
-						<div className="max-w-4xl py-4 sm:py-48 lg:py-56">
+						<div className="max-w-4xl  sm:py-48 lg:py-56">
 							<div className="text-center lg:text-left space-y-20">
 								<div>
 									<p className="py-2 text-5xl leading-snug md:text-6xl text-balance lg:text-8xl font-semibold bg-clip-text text-transparent bg-[linear-gradient(to_right,theme(colors.pink.500),theme(colors.red.400),theme(colors.pink.500),theme(colors.pink.500),theme(colors.pink.500),theme(colors.red.400),theme(colors.pink.500))] bg-[length:200%_auto] animate-gradient">
