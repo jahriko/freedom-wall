@@ -45,7 +45,7 @@ export default function RealtimePosts({
 	}, [supabase, router])
 
 	return (
-		<ul className="mt-16 grid gap-8 grid-cols-2 lg:grid-cols-3">
+		<ul className="mt-16 grid gap-4 lg:gap-8 grid-cols-2 lg:grid-cols-3">
 			{posts?.map((post) => (
 				<li key={post.id}>
 					<PostCard post={post} allowDelete={allowDelete} />
